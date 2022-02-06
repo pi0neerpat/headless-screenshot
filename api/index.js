@@ -1,16 +1,21 @@
-const playwright = require("playwright-aws-lambda");
+const playwright = require("playwright-core");
+const chromium = require("chrome-aws-lambda");
 
-exports.handler = async (event, context) => {
+module.exports = async (req, res) => {
   let url = "https://duckduckgo.com";
   let width = 514;
   let height = 171;
-  if (event.querytringParameters) {
-    ({ width, height, url } = event.querytringParameters);
+  if (req.querytringParameters) {
+    ({ width, height, url } = req.querytringParameters);
   }
 
   let browser = null;
   try {
-    const browser = await playwright.launchChromium();
+    const browser = await playwright.chromium.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath,
+      headless: chromium.headless,
+    });
     const context = await browser.newContext();
 
     const page = await context.newPage();
@@ -18,13 +23,17 @@ exports.handler = async (event, context) => {
       waitUntil: "networkidle",
     });
     const buffer = await page.screenshot();
-    return {
+    res.send({
       statusCode: 200,
       headers: { "Content-Type": "image/jpeg" },
       body: buffer,
-    };
+    });
   } catch (error) {
-    throw error;
+    console.log(error);
+    res.send({
+      statusCode: 500,
+      body: error,
+    });
   } finally {
     if (browser) {
       await browser.close();
