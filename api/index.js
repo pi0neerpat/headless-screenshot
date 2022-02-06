@@ -23,11 +23,8 @@ module.exports = async (req, res) => {
       waitUntil: "networkidle",
     });
     const buffer = await page.screenshot();
-    res.send({
-      statusCode: 200,
-      headers: { "Content-Type": "image/jpeg" },
-      buffer,
-    });
+    res.writeHead(200, { "Content-Type": "image/jpeg" });
+    res.send(buffer);
   } catch (error) {
     console.log(error);
     res.send({
