@@ -2,8 +2,10 @@ const playwright = require("playwright-aws-lambda");
 
 exports.handler = async (event, context) => {
   let url = "https://duckduckgo.com";
+  let width = 514;
+  let height = 171;
   if (event.querytringParameters) {
-    ({ url } = event.querytringParameters);
+    ({ width, height, url } = event.querytringParameters);
   }
 
   let browser = null;
