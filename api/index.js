@@ -6,8 +6,8 @@ module.exports = async (req, res) => {
   let width = 514;
   let height = 171;
   console.log(req);
-  if (req.querytringParameters) {
-    ({ width, height, url } = req.querytringParameters);
+  if (req.query) {
+    ({ width, height, url } = req.query);
   }
   console.log(url);
   let browser = null;
