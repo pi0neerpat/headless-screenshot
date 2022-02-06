@@ -5,11 +5,9 @@ module.exports = async (req, res) => {
   let url = "https://duckduckgo.com";
   let width = 514;
   let height = 171;
-  console.log(req);
   if (req.query) {
     ({ width, height, url } = req.query);
   }
-  console.log(url);
   let browser = null;
   try {
     const browser = await playwright.chromium.launch({
