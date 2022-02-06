@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
   if (req.querytringParameters) {
     ({ width, height, url } = req.querytringParameters);
   }
-
+  console.log(url);
   let browser = null;
   try {
     const browser = await playwright.chromium.launch({
