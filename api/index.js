@@ -5,6 +5,7 @@ module.exports = async (req, res) => {
   let url = "https://duckduckgo.com";
   let width = 514;
   let height = 171;
+  console.log(req);
   if (req.querytringParameters) {
     ({ width, height, url } = req.querytringParameters);
   }
