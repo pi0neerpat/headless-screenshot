@@ -25,8 +25,8 @@ module.exports = async (req, res) => {
     const buffer = await page.screenshot();
     res.send({
       statusCode: 200,
-      headers: { "Content-Type": "image/png" },
-      body: buffer,
+      headers: { "Content-Type": "image/jpeg" },
+      buffer,
     });
   } catch (error) {
     console.log(error);
